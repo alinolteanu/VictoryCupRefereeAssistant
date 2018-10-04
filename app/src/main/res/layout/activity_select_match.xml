@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SelectMatchActivity">
 
     <TextView
         android:id="@+id/txtMeciurileZilei"
@@ -15,10 +15,11 @@
         android:gravity="center"
         android:textSize="20dp" />
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
         android:id="@+id/listGames"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/txtMeciurileZilei"></ListView>
+        android:layout_below="@id/txtMeciurileZilei"
+        />
 
 </RelativeLayout>

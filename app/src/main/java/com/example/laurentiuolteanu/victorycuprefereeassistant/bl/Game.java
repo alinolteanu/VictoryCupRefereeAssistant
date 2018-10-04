@@ -2,9 +2,9 @@ package com.example.laurentiuolteanu.victorycuprefereeassistant.bl;
 
 public class Game {
 
-    public static int GAME_NOT_STARTED = 0;
-    public static int GAME_IN_PROGRESS = 1;
-    public static int GAME_ENDED = 2;
+    public static final int GAME_NOT_STARTED = 0;
+    public static final int GAME_IN_PROGRESS = 1;
+    public static final int GAME_ENDED = 2;
 
     public static String LEAGUE_LIGA_2B = "Liga 2B";
 

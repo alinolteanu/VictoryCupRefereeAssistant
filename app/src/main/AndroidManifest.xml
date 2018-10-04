@@ -17,7 +17,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".SelectMatchActivity"
             android:label="@string/app_name"
             android:screenOrientation="landscape">
         </activity>
