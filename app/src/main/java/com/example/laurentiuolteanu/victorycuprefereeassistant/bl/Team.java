@@ -4,10 +4,12 @@ public class Team {
 
     public long id;
     public String name;
+    public String logo;
 
-    public Team(long id, String name) {
+    public Team(long id, String name, String logo) {
         this.id = id;
         this.name = name;
+        this.logo = logo;
     }
 
     public long getId() {
@@ -24,5 +26,13 @@ public class Team {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getLogo() {
+        return logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 }
