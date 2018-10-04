@@ -1,6 +1,7 @@
 package com.example.laurentiuolteanu.victorycuprefereeassistant;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Game;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Team;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.TeamSingleton;
@@ -65,8 +65,8 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
         }
 
         public void bindData(final Game game) {
-            Team team1 = getTeamById(game.getHostID());
-            Team team2 = getTeamById(game.getGuestID());
+            Team team1 = TeamSingleton.getInstance().getTeamById(game.getHostID());
+            Team team2 = TeamSingleton.getInstance().getTeamById(game.getGuestID());
 
             setMatchTeamsPreferences(team1, team2);
             setGameStatistics(game);
@@ -109,17 +109,9 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
         }
 
         private void SelectMatch(View view, Game game){
-            Toast.makeText(view.getContext(), String.valueOf(game.getId()), Toast.LENGTH_SHORT).show();
-        }
-
-        @NonNull
-        private Team getTeamById(long id){
-            List<Team> teams = TeamSingleton.getInstance().getAllTeams();
-            for(int i = 0; i< teams.size(); i++){
-                if(teams.get(i).getId() == id)
-                    return teams.get(i);
-            }
-            return null;
+            Intent i = new Intent(view.getContext(), PlayersAttendanceActivity.class);
+            i.putExtra("matchId", game.getId());
+            view.getContext().startActivity(i);
         }
     }
 }

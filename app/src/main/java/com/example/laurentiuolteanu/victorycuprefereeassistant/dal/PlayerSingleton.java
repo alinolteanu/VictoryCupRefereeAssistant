@@ -63,4 +63,13 @@ public class PlayerSingleton {
 
         return players;
     }
+
+    public List<Player> getPlayersInTeam(long teamId){
+        List<Player> list = new ArrayList<>();
+        List<Player> players = getAllTeams();
+        for(Player player: players)
+            if(player.getTeamID() == teamId)
+                list.add(player);
+        return list;
+    }
 }

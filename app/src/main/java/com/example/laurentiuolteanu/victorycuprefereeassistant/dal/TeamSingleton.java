@@ -41,4 +41,13 @@ public class TeamSingleton {
 
         return teams;
     }
+
+    public Team getTeamById(long id){
+        List<Team> teams = getAllTeams();
+        for(Team team: teams){
+            if(team.getId() == id)
+                return team;
+        }
+        return null;
+    }
 }

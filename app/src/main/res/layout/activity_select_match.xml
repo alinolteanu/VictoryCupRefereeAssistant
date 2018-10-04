@@ -7,7 +7,7 @@
     tools:context=".SelectMatchActivity">
 
     <TextView
-        android:id="@+id/txtMeciurileZilei"
+        android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Meciurile zilei si Rezultate Live"
@@ -19,7 +19,7 @@
         android:id="@+id/listGames"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/txtMeciurileZilei"
+        android:layout_below="@id/titleTextView"
         />
 
 </RelativeLayout>

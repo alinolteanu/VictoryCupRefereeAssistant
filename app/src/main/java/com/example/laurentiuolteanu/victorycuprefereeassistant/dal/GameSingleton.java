@@ -1,7 +1,6 @@
 package com.example.laurentiuolteanu.victorycuprefereeassistant.dal;
 
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Game;
-import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Team;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +31,13 @@ public class GameSingleton {
         teams.add(new Game(7, 13, 14, Game.LEAGUE_LIGA_2B, Game.PLAYING_FIELD_1, Game.GAME_NOT_STARTED, "23:00", null));
         teams.add(new Game(8, 15, 16, Game.LEAGUE_LIGA_2B, Game.PLAYING_FIELD_2, Game.GAME_NOT_STARTED, "23:00", null));
         return teams;
+    }
+
+    public Game getGameById(long gameId){
+        List<Game> games = getAllGames();
+        for(Game game: games)
+            if(game.getId() == gameId)
+                return game;
+        return null;
     }
 }
