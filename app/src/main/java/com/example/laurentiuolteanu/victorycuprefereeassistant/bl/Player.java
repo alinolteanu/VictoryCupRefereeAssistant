@@ -5,10 +5,21 @@ public class Player {
     private String nume;
     private long teamID;
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+    }
+
+    private boolean isSelected;
+
     public Player(long id, String nume, long teamID) {
         this.id = id;
         this.nume = nume;
         this.teamID = teamID;
+        isSelected = false;
     }
 
     public long getId() {

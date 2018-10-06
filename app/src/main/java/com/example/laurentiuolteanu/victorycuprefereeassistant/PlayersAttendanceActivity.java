@@ -11,9 +11,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Player;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Team;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.GameSingleton;
+import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.PlayerSingleton;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.TeamSingleton;
+
+import java.util.List;
 
 public class PlayersAttendanceActivity extends AppCompatActivity {
 
@@ -49,10 +53,12 @@ public class PlayersAttendanceActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(attendanceTeam1){
+                    saveTeamAttendance(team1);
                     attendanceTeam1 = false;
                     populateViews(team2);
                 } else{
-                    Toast.makeText(getApplicationContext(), "Start Meci", Toast.LENGTH_SHORT);
+                    saveTeamAttendance(team2);
+                    Toast.makeText(getApplicationContext(), "Start Meci", Toast.LENGTH_SHORT).show();
                     finish();
                     //TODO: Start match using final matchId
 
@@ -60,6 +66,15 @@ public class PlayersAttendanceActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void saveTeamAttendance(Team team) {
+        List<Player> players = PlayerSingleton.getInstance().getPlayersInTeam(team.getId());
+        StringBuilder sb = new StringBuilder();
+        for(Player p:players)
+            sb.append(p.isSelected() ? p.getId() + ", " : "");
+        sb.delete(sb.lastIndexOf(",")== -1 ? 0 : sb.lastIndexOf(","), sb.length());
+        Toast.makeText(getApplicationContext(), sb.toString(), Toast.LENGTH_SHORT).show();
     }
 
     private void populateViews(Team team){

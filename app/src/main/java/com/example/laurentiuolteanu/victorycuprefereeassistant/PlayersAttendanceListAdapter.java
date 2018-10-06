@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Player;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.PlayerSingleton;
 
@@ -50,20 +50,14 @@ public class PlayersAttendanceListAdapter extends RecyclerView.Adapter<PlayersAt
         }
 
         public void bindData(final Player player) {
-
+            final Resources resources = itemView.getContext().getResources();
             playerNameTextView.setText(player.getNume());
-
+            itemView.setBackground(player.isSelected() ? resources.getDrawable(R.color.selectedBackgroundColor) : resources.getDrawable(R.color.notSelectedBackgroundColor));
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Resources resources = view.getContext().getResources();
-                    if(isSelected){
-                        view.setBackground(resources.getDrawable(R.color.defaultBackgroundColor));
-                        isSelected = false;
-                    } else{
-                        view.setBackground(resources.getDrawable(R.color.greenBackgroundColor));
-                        isSelected = true;
-                    }
+                    player.setSelected(!player.isSelected());
+                    itemView.setBackground(player.isSelected() ? resources.getDrawable(R.color.selectedBackgroundColor) : resources.getDrawable(R.color.notSelectedBackgroundColor));
                 }
             });
         }

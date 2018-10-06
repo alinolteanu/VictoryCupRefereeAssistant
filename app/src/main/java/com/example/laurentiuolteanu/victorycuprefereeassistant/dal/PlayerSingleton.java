@@ -7,9 +7,11 @@ import java.util.List;
 
 public class PlayerSingleton {
     private static PlayerSingleton mySingleton = null;
+    private List<Player> data;
 
     private PlayerSingleton() {
-
+        data = new ArrayList<>();
+        data = makeData();
     }
 
     public static PlayerSingleton getInstance() {
@@ -20,6 +22,10 @@ public class PlayerSingleton {
     }
 
     public List<Player> getAllTeams() {
+        return data;
+    }
+
+    private List<Player> makeData(){
         List<Player> players = new ArrayList<>();
 
         players.add(new Player(1, "Stoica Adrian", 1));
@@ -66,8 +72,7 @@ public class PlayerSingleton {
 
     public List<Player> getPlayersInTeam(long teamId){
         List<Player> list = new ArrayList<>();
-        List<Player> players = getAllTeams();
-        for(Player player: players)
+        for(Player player: data)
             if(player.getTeamID() == teamId)
                 list.add(player);
         return list;
