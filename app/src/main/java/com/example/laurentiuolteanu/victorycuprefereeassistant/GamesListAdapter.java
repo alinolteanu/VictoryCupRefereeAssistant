@@ -109,9 +109,15 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
         }
 
         private void SelectMatch(View view, Game game){
-            Intent i = new Intent(view.getContext(), PlayersAttendanceActivity.class);
-            i.putExtra("matchId", game.getId());
-            view.getContext().startActivity(i);
+            if(game.getStatus() == Game.GAME_NOT_STARTED) {
+                Intent i = new Intent(view.getContext(), PlayersAttendanceActivity.class);
+                i.putExtra("matchId", game.getId());
+                view.getContext().startActivity(i);
+            } else {
+                Intent i = new Intent(view.getContext(), MatchActivity.class);
+                i.putExtra("matchId", game.getId());
+                view.getContext().startActivity(i);
+            }
         }
     }
 }

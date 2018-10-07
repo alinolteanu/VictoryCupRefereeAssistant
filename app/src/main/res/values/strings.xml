@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">VictoryCupRefereeAssistant</string>
     <string name="dummy_text">Dummy Text</string>
+    <string name="endGameText">Scor Final</string>
 </resources>
