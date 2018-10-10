@@ -58,7 +58,7 @@ public class PlayersAttendanceActivity extends AppCompatActivity {
                     populateViews(team2);
                 } else{
                     saveTeamAttendance(team2);
-                    Toast.makeText(getApplicationContext(), "Start Meci", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getApplicationContext(), "Start Meci", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(getApplicationContext(), MatchActivity.class);
                     i.putExtra("matchId",matchId);
                     getApplicationContext().startActivity(i);

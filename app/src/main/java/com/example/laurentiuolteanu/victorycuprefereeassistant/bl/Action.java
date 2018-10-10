@@ -7,6 +7,12 @@ public class Action {
     public static final int ACTION_YELLOW_CARD = 4;
     public static final int ACTION_RED_CARD = 5;
     public static final int ACTION_FAULT = 6;
+    public static final String ACTION_GOAL_ICON = "ic_ball";
+    public static final String ACTION_OWNGOAL_ICON = "ic_ball_red";
+    public static final String ACTION_PENALTY_ICON = "ic_penalty";
+    public static final String ACTION_YELLOW_CARD_ICON = "ic_yellow_card";
+    public static final String ACTION_RED_CARD_ICON = "ic_red_card";
+    public static final String ACTION_FAULT_ICON = "ic_adidas";
 
     public int minute;
     public String hostPlayer;

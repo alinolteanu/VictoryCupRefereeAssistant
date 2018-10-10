@@ -36,4 +36,40 @@ public class ActionSingleton {
         actions.add(new Action(38, null, "Marascu Mihai", Action.ACTION_PENALTY, "2 - 6"));
         return actions;
     }
+
+    public String getActionNameById(int action){
+        switch (action){
+            case Action.ACTION_GOAL:
+                return "Gol";
+            case Action.ACTION_OWNGOAL:
+                return "AutoGol";
+            case Action.ACTION_PENALTY:
+                return "Penalty";
+            case Action.ACTION_YELLOW_CARD:
+                return "Cartonas Galben";
+            case Action.ACTION_RED_CARD:
+                return "Cartonas Rosu";
+            case Action.ACTION_FAULT:
+                return "Fault";
+        }
+        return "";
+    }
+
+    public String getActionIconById(int action){
+        switch (action){
+            case Action.ACTION_GOAL:
+                return Action.ACTION_GOAL_ICON;
+            case Action.ACTION_OWNGOAL:
+                return Action.ACTION_OWNGOAL_ICON;
+            case Action.ACTION_PENALTY:
+                return Action.ACTION_PENALTY_ICON;
+            case Action.ACTION_YELLOW_CARD:
+                return Action.ACTION_YELLOW_CARD_ICON;
+            case Action.ACTION_RED_CARD:
+                return Action.ACTION_RED_CARD_ICON;
+            case Action.ACTION_FAULT:
+                return Action.ACTION_FAULT_ICON;
+        }
+        return "";
+    }
 }

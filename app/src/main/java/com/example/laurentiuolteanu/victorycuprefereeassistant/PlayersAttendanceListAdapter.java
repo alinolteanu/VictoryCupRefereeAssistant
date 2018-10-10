@@ -42,7 +42,6 @@ public class PlayersAttendanceListAdapter extends RecyclerView.Adapter<PlayersAt
 
     public class PlayersAttendanceListAdapterViewHolder extends RecyclerView.ViewHolder {
         private TextView playerNameTextView;
-        private boolean isSelected = false;
 
         public PlayersAttendanceListAdapterViewHolder(final View itemView) {
             super(itemView);

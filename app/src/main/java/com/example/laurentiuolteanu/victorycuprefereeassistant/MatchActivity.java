@@ -11,11 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Action;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Game;
+import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Player;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Team;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.ActionSingleton;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.GameSingleton;
+import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.PlayerSingleton;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.TeamSingleton;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MatchActivity extends AppCompatActivity {
 
@@ -31,7 +37,10 @@ public class MatchActivity extends AppCompatActivity {
     private Button addActionTeam2;
     private RecyclerView.LayoutManager mLayoutManager;
 
+    public static int REQUEST_CODE = 100;
     private long matchId;
+
+    List<Action> actions;
 
     @Override
     public void onBackPressed() {
@@ -51,7 +60,6 @@ public class MatchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_match);
         initViews();
 
-
         Intent i = getIntent();
         matchId = i.getLongExtra("matchId", 0);
         initData();
@@ -61,11 +69,16 @@ public class MatchActivity extends AppCompatActivity {
         Game game = GameSingleton.getInstance().getGameById(matchId);
         if(game.getStatus() == Game.GAME_ENDED){
             populateGameEnded(game);
+            actions = ActionSingleton.getInstance().getAllActions();
         } else if(game.getStatus() == Game.GAME_IN_PROGRESS){
             populateGameInProgress(game);
+            actions = ActionSingleton.getInstance().getAllActions();
         } else if(game.getStatus() == Game.GAME_NOT_STARTED){
             populateGameNotStarted(game);
+            actions = new ArrayList<>();
         }
+        ActionsListAdapter gamesListAdapter = new ActionsListAdapter(actions);
+        actionsRecyclerView.setAdapter(gamesListAdapter);
     }
 
     private void populateGameInProgress(Game g) {
@@ -92,15 +105,46 @@ public class MatchActivity extends AppCompatActivity {
     }
 
     private void populateGeneralViews(Game g) {
-        Team team1 = TeamSingleton.getInstance().getTeamById(g.getHostID());
-        Team team2 = TeamSingleton.getInstance().getTeamById(g.getGuestID());
+        final Team team1 = TeamSingleton.getInstance().getTeamById(g.getHostID());
+        final Team team2 = TeamSingleton.getInstance().getTeamById(g.getGuestID());
         team1ImageView.setImageResource(getResources().getIdentifier(team1.getLogo() , "drawable", getPackageName()));
         team2ImageView.setImageResource(getResources().getIdentifier(team2.getLogo() , "drawable", getPackageName()));
         team1NameTextView.setText(team1.getName());
         team2NameTextView.setText(team2.getName());
 
-        ActionsListAdapter gamesListAdapter = new ActionsListAdapter(ActionSingleton.getInstance().getAllActions());
-        actionsRecyclerView.setAdapter(gamesListAdapter);
+        team1ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddGameAction(team1, team2);
+            }
+        });
+
+        team2ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddGameAction(team2, team1);
+            }
+        });
+
+        addActionTeam1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddGameAction(team1, team2);
+            }
+        });
+        addActionTeam2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AddGameAction(team2, team1);
+            }
+        });
+    }
+
+    private void AddGameAction(Team team1, Team team2) {
+        Intent i = new Intent(getApplicationContext(), SelectActionActivity.class);
+        i.putExtra("selectedTeam", team1.id);
+        i.putExtra("opponentTeam", team2.id);
+        startActivityForResult(i, REQUEST_CODE);
     }
 
     private void initViews(){
@@ -118,17 +162,89 @@ public class MatchActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         actionsRecyclerView.setLayoutManager(mLayoutManager);
 
-        addActionTeam1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "addActionTeam1", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                int action = data.getIntExtra("action", 0);
+                long playerId = data.getLongExtra("playerId", 0);
+                actions.add(createAction(action, playerId));
+                actionsRecyclerView.getAdapter().notifyDataSetChanged();
             }
-        });
-        addActionTeam2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "addActionTeam2", Toast.LENGTH_SHORT).show();
-            }
-        });
+        }
+    }
+
+    public Action createAction(int action, long playerId) {
+        Action a = null;
+        Game g = GameSingleton.getInstance().getGameById(matchId);
+        List<Player> hostTeamPlayers = PlayerSingleton.getInstance().getPlayersInTeam(g.getHostID());
+        List<Player> guestTeamPlayers = PlayerSingleton.getInstance().getPlayersInTeam(g.getGuestID());
+
+        switch (action) {
+            case Action.ACTION_GOAL:
+                if(TeamContainsPlayer(playerId, hostTeamPlayers)){
+                    a = new Action(actions.size() + 1, PlayerSingleton.getInstance().getPlayerById(playerId).getNume(),
+                            null, action, String.valueOf(GameSingleton.getInstance().getScoreAsInt(g.getId()).get(0) + 1).concat(" - 0"));
+                } else{
+                    a = new Action(actions.size() + 1, null,
+                            PlayerSingleton.getInstance().getPlayerById(playerId).getNume(), action, "0 - ".concat(String.valueOf(GameSingleton.getInstance().getScoreAsInt(g.getId()).get(1) + 1)));
+                }
+                break;
+            case Action.ACTION_OWNGOAL:
+                if(TeamContainsPlayer(playerId, hostTeamPlayers)){
+                    a = new Action(actions.size() + 1, PlayerSingleton.getInstance().getPlayerById(playerId).getNume(),
+                            null, action, null);
+                } else{
+                    a = new Action(actions.size() + 1, null,
+                            PlayerSingleton.getInstance().getPlayerById(playerId).getNume(), action,null);
+                }
+                break;
+            case Action.ACTION_PENALTY:
+                if(TeamContainsPlayer(playerId, hostTeamPlayers)){
+                    a = new Action(actions.size() + 1, PlayerSingleton.getInstance().getPlayerById(playerId).getNume(),
+                            null, action, null);
+                } else{
+                    a = new Action(actions.size() + 1, null,
+                            PlayerSingleton.getInstance().getPlayerById(playerId).getNume(), action,null);
+                }
+                break;
+            case Action.ACTION_RED_CARD:
+                if(TeamContainsPlayer(playerId, hostTeamPlayers)){
+                    a = new Action(actions.size() + 1, PlayerSingleton.getInstance().getPlayerById(playerId).getNume(),
+                            null, action, null);
+                } else{
+                    a = new Action(actions.size() + 1, null,
+                            PlayerSingleton.getInstance().getPlayerById(playerId).getNume(), action,null);
+                }
+                break;
+            case Action.ACTION_YELLOW_CARD:
+                if(TeamContainsPlayer(playerId, hostTeamPlayers)){
+                    a = new Action(actions.size() + 1, PlayerSingleton.getInstance().getPlayerById(playerId).getNume(),
+                            null, action, null);
+                } else{
+                    a = new Action(actions.size() + 1, null,
+                            PlayerSingleton.getInstance().getPlayerById(playerId).getNume(), action,null);
+                }
+                break;
+            case Action.ACTION_FAULT:
+                if(TeamContainsPlayer(playerId, hostTeamPlayers)){
+                    a = new Action(actions.size() + 1, PlayerSingleton.getInstance().getPlayerById(playerId).getNume(),
+                            null, action, null);
+                } else{
+                    a = new Action(actions.size() + 1, null,
+                            PlayerSingleton.getInstance().getPlayerById(playerId).getNume(), action,null);
+                }
+                break;
+        }
+        return a;
+    }
+
+    public boolean TeamContainsPlayer(long playerId, List<Player> team){
+        for(Player p: team)
+            if(p.getId() == playerId)
+                return true;
+        return false;
     }
 }

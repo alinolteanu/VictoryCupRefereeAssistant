@@ -10,7 +10,6 @@ public class PlayerSingleton {
     private List<Player> data;
 
     private PlayerSingleton() {
-        data = new ArrayList<>();
         data = makeData();
     }
 
@@ -76,5 +75,12 @@ public class PlayerSingleton {
             if(player.getTeamID() == teamId)
                 list.add(player);
         return list;
+    }
+
+    public Player getPlayerById(long playerId){
+        for(Player player: data)
+            if(player.getId() == playerId)
+                return player;
+        return null;
     }
 }

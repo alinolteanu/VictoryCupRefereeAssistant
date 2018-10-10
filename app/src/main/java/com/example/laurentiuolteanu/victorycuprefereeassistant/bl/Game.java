@@ -94,4 +94,5 @@ public class Game {
     public void setScore(String score) {
         this.score = score;
     }
+
 }

@@ -117,13 +117,13 @@
 
     <TextView
         android:id="@+id/txtScore"
+        style="@style/textViewListLine1Style"
         android:layout_width="58dp"
         android:layout_height="match_parent"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/dummy_text"
-        style="@style/textViewListLine1Style"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageViewActionGuest"
         app:layout_constraintHorizontal_bias="0.5"
