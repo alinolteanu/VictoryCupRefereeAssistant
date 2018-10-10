@@ -16,7 +16,7 @@
         android:id="@+id/matchDetailsConstraintLayout">
 
         <ImageView
-            android:id="@+id/team1ImageView"
+            android:id="@+id/imageViewActionHost"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintEnd_toStartOf="@+id/team1NameTextView"
@@ -34,7 +34,7 @@
             android:textSize="25sp"
             app:layout_constraintEnd_toStartOf="@+id/scoreLinearLayout"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/team1ImageView"
+            app:layout_constraintStart_toEndOf="@+id/imageViewActionHost"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
@@ -85,13 +85,13 @@
             android:gravity="center_vertical|end"
             android:text="TextView"
             android:textSize="25sp"
-            app:layout_constraintEnd_toStartOf="@+id/team2ImageView"
+            app:layout_constraintEnd_toStartOf="@+id/imageViewActionGuest"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/scoreLinearLayout"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/team2ImageView"
+            android:id="@+id/imageViewActionGuest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"

@@ -12,7 +12,7 @@
         android:id="@+id/fieldLeagueLinearLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        app:layout_constraintEnd_toStartOf="@+id/team1TextView"
+        app:layout_constraintEnd_toStartOf="@+id/txtNamePlayerHost"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toStartOf="parent"
@@ -21,18 +21,13 @@
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical">
-        <TextView
-            android:id="@+id/fieldTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dummy_text"
-            />
 
         <TextView
             android:id="@+id/txtMinute"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/dummy_text"
+            android:text="@string/txtMinute"
+            style="@style/textViewListLine1Style"
             />
     </LinearLayout>
 
@@ -45,10 +40,9 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/logo_victory_cup"
         app:layout_constraintEnd_toStartOf="@+id/txtScore"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/team1TextView"
+        app:layout_constraintStart_toEndOf="@+id/txtNamePlayerHost"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -60,7 +54,6 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:src="@drawable/logo_victory_cup"
         app:layout_constraintEnd_toStartOf="@+id/txtNamePlayerGuest"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/txtScore"
@@ -80,7 +73,8 @@
         app:layout_constraintStart_toEndOf="@+id/txtNamePlayerGuest"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible">
 
         <ImageView
             android:id="@+id/matchStatusImageView"
@@ -90,16 +84,16 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/team1TextView"
+        android:id="@+id/txtNamePlayerHost"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="casual"
+        android:fontFamily="Font Awesome 5 Free"
         android:gravity="end|center_vertical"
         android:text="@string/dummy_text"
-        android:textSize="15sp"
+        style="@style/textViewListLine1Style"
         app:layout_constraintEnd_toStartOf="@+id/imageViewActionHost"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/fieldLeagueLinearLayout"
@@ -112,10 +106,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="casual"
+        android:fontFamily="Font Awesome 5 Free"
         android:gravity="start|center_vertical"
         android:text="@string/dummy_text"
-        android:textSize="15sp"
+        style="@style/textViewListLine1Style"
         app:layout_constraintEnd_toStartOf="@+id/statusImageLinearLayout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageViewActionGuest"
@@ -129,7 +123,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/dummy_text"
-        android:textSize="15sp"
+        style="@style/textViewListLine1Style"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imageViewActionGuest"
         app:layout_constraintHorizontal_bias="0.5"

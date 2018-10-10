@@ -2,8 +2,9 @@ package com.example.laurentiuolteanu.victorycuprefereeassistant;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Game;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Team;
+import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.ActionSingleton;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.GameSingleton;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.TeamSingleton;
 
@@ -24,8 +26,10 @@ public class MatchActivity extends AppCompatActivity {
     private TextView matchStatusTextView;
     private TextView scoreTextView;
     private TextView breakScoreTextView;
+    private RecyclerView actionsRecyclerView;
     private Button addActionTeam1;
     private Button addActionTeam2;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private long matchId;
 
@@ -75,7 +79,7 @@ public class MatchActivity extends AppCompatActivity {
         populateGeneralViews(g);
         matchStatusTextView.setText(R.string.endGameText);
         scoreTextView.setText(g.getScore());
-        breakScoreTextView.setText(String.format("Scor la pauza: %s", g.getScore()));
+        breakScoreTextView.setText(String.format("Scor la pauza: %s", "1 - 3"));
         addActionTeam1.setVisibility(View.GONE);
         addActionTeam2.setVisibility(View.GONE);
     }
@@ -94,11 +98,14 @@ public class MatchActivity extends AppCompatActivity {
         team2ImageView.setImageResource(getResources().getIdentifier(team2.getLogo() , "drawable", getPackageName()));
         team1NameTextView.setText(team1.getName());
         team2NameTextView.setText(team2.getName());
+
+        ActionsListAdapter gamesListAdapter = new ActionsListAdapter(ActionSingleton.getInstance().getAllActions());
+        actionsRecyclerView.setAdapter(gamesListAdapter);
     }
 
     private void initViews(){
-        team1ImageView = findViewById(R.id.team1ImageView);
-        team2ImageView = findViewById(R.id.team2ImageView);
+        team1ImageView = findViewById(R.id.imageViewActionHost);
+        team2ImageView = findViewById(R.id.imageViewActionGuest);
         team1NameTextView = findViewById(R.id.team1NameTextView);
         team2NameTextView = findViewById(R.id.team2NameTextView);
         matchStatusTextView = findViewById(R.id.matchStatusTextView);
@@ -106,6 +113,10 @@ public class MatchActivity extends AppCompatActivity {
         breakScoreTextView = findViewById(R.id.breakScoreTextView);
         addActionTeam1 = findViewById(R.id.buttonAddActionTeam1);
         addActionTeam2 = findViewById(R.id.buttonAddActionTeam2);
+
+        actionsRecyclerView = findViewById(R.id.matchHighlightsList);
+        mLayoutManager = new LinearLayoutManager(this);
+        actionsRecyclerView.setLayoutManager(mLayoutManager);
 
         addActionTeam1.setOnClickListener(new View.OnClickListener() {
             @Override

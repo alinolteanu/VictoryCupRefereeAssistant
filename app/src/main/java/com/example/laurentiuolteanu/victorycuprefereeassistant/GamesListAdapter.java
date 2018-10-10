@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Game;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.bl.Team;
 import com.example.laurentiuolteanu.victorycuprefereeassistant.dal.TeamSingleton;
@@ -54,12 +54,12 @@ public class GamesListAdapter extends RecyclerView.Adapter<GamesListAdapter.Game
         public GamesListAdapterViewHolder(final View itemView) {
             super(itemView);
             fieldTextView = itemView.findViewById(R.id.fieldTextView);
-            leagueTextView = itemView.findViewById(R.id.leagueTextView);
+            leagueTextView = itemView.findViewById(R.id.txtMinute);
             team1TextView = itemView.findViewById(R.id.team1TextView);
-            team2TextView = itemView.findViewById(R.id.team2TextView);
-            scoreTimeTextView = itemView.findViewById(R.id.timeScoreTextView);
-            team1ImageView = itemView.findViewById(R.id.team1ImageView);
-            team2ImageView = itemView.findViewById(R.id.team2ImageView);
+            team2TextView = itemView.findViewById(R.id.txtNamePlayerGuest);
+            scoreTimeTextView = itemView.findViewById(R.id.txtScore);
+            team1ImageView = itemView.findViewById(R.id.imageViewActionHost);
+            team2ImageView = itemView.findViewById(R.id.imageViewActionGuest);
             matchStatusImageView = itemView.findViewById(R.id.matchStatusImageView);
 
         }
